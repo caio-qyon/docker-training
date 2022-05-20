@@ -1,0 +1,42 @@
+node:
+  image: node:14.17.6-alpine
+  container_name: final-web
+  ports:
+    - "80:80"
+  volumes:
+    - "./web:/app"
+  command: >
+    bash -c "npm install && npm install -g @angular/cli@latest && ng build"
+
+nginx:
+  image: nginx:1.21.6
+  container_name: final-nginx
+  ports:
+    - "4200:80"
+  volumes:
+    - node:/usr/share/nginx/html/
+  links:
+    - node
+
+php:
+  image: php:7.2-apache
+  container_name: final-php
+  ports:
+    - "9000:80"
+  volumes:
+    - C:/QYON/Training/docker-training/api-php:/var/www/html
+  command: >
+    bash -c "docker-php-ext-install mysqli"
+  links:
+    - db
+
+db:
+  image: mysql:latest
+  container_name: final-mysql-php
+  ports:
+    - "3306:3306"
+  volumes:
+    - /var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_VERSION=latest

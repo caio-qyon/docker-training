@@ -1,8 +1,6 @@
 <?php
 
-error_reporting(0);
-
-$conn = mysqli_connect("mysql:3306", "root", "password");
+$conn = mysqli_connect("db", "root", "root", "sys");
 
 if (!$conn) {
   echo "{ \"message\": \"not connected\" }";
