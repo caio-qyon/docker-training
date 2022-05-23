@@ -1,3 +1,9 @@
+fron:
+  build: ../web/
+  container_name: front
+  ports:
+    - "4200:80"
+
 php:
   build: ./
   container_name: meu-php
